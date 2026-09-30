@@ -1,0 +1,154 @@
+{
+  "info": {
+    "name": "Fuelwise — Spotter assessment",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": "1,396 operator-matched station coordinates and offline US city lookup. Starting fuel is already owned; provide initial_fuel_price for total consumed-fuel value. Prices use the supplied CSV snapshot."
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://127.0.0.1:8000"
+    },
+    {
+      "key": "trip_id",
+      "value": ""
+    },
+    {
+      "key": "map_url",
+      "value": ""
+    }
+  ],
+  "item": [
+    {
+      "name": "Long Route",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"start\": {\n    \"lat\": 34.0522,\n    \"lon\": -118.2437\n  },\n  \"finish\": {\n    \"lat\": 35.4676,\n    \"lon\": -97.5164\n  },\n  \"initial_fuel_price\": 3.5\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": "{{base_url}}/api/routes/"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Created', () => pm.response.to.have.status(201));",
+              "if (pm.response.code === 201) {",
+              "const d = pm.response.json();",
+              "pm.collectionVariables.set('trip_id', d.id);",
+              "pm.collectionVariables.set('map_url', d.map_url);",
+              "pm.test('At most three routing calls', () => pm.expect(d.external_calls.routing).to.be.at.most(3));",
+              "pm.test('Cash total reconciles', () => pm.expect(d.purchases.reduce((n,p) => n + Math.round(Number(p.cost)*100),0)).to.equal(Math.round(Number(d.fuel_purchased_cost)*100)));",
+              "pm.test('Fuel balance reconciles', () => pm.expect(d.initial_fuel_gallons + d.gallons_purchased - d.gallons_consumed).to.be.closeTo(d.arrival_gallons, 0.000001));",
+              "pm.test('Tank constraints', () => d.purchases.forEach(p => {pm.expect(p.arrival_gallons).to.be.at.least(0); pm.expect(p.departure_gallons).to.be.at.most(50.000001);}));",
+              "}"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Short Route",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"start\": {\n    \"lat\": 32.7767,\n    \"lon\": -96.797\n  },\n  \"finish\": {\n    \"lat\": 30.2672,\n    \"lon\": -97.7431\n  }\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": "{{base_url}}/api/routes/"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Created', () => pm.response.to.have.status(201));",
+              "if (pm.response.code === 201) {",
+              "const d = pm.response.json();",
+              "pm.collectionVariables.set('trip_id', d.id);",
+              "pm.collectionVariables.set('map_url', d.map_url);",
+              "pm.test('At most three routing calls', () => pm.expect(d.external_calls.routing).to.be.at.most(3));",
+              "pm.test('Cash total reconciles', () => pm.expect(d.purchases.reduce((n,p) => n + Math.round(Number(p.cost)*100),0)).to.equal(Math.round(Number(d.fuel_purchased_cost)*100)));",
+              "pm.test('Fuel balance reconciles', () => pm.expect(d.initial_fuel_gallons + d.gallons_purchased - d.gallons_consumed).to.be.closeTo(d.arrival_gallons, 0.000001));",
+              "pm.test('Tank constraints', () => d.purchases.forEach(p => {pm.expect(p.arrival_gallons).to.be.at.least(0); pm.expect(p.departure_gallons).to.be.at.most(50.000001);}));",
+              "}"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Invalid Country",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"start\": {\n    \"lat\": 43.65,\n    \"lon\": -79.38\n  },\n  \"finish\": {\n    \"lat\": 35.4676,\n    \"lon\": -97.5164\n  }\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": "{{base_url}}/api/routes/"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Rejects Canada', () => pm.response.to.have.status(400));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Saved trip",
+      "request": {
+        "method": "GET",
+        "url": "{{base_url}}/api/routes/{{trip_id}}/"
+      }
+    },
+    {
+      "name": "Coverage",
+      "request": {
+        "method": "GET",
+        "url": "{{base_url}}/api/health/"
+      }
+    }
+  ]
+}

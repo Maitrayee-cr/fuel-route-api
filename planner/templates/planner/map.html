@@ -1,0 +1,38 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Fuelwise · Your route</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
+<style>*{box-sizing:border-box}body{margin:0;background:#f4f5f0;color:#173d36;font:14px/1.5 system-ui,sans-serif}.layout{display:grid;grid-template-columns:390px 1fr;height:100vh}aside{overflow:auto;padding:30px}a{color:#185a47}h1{font-size:34px;letter-spacing:-1.5px;line-height:1.15}.eyebrow{text-transform:uppercase;letter-spacing:2px;font-size:11px}.amount{font-size:48px;letter-spacing:-2px;margin:12px 0 0}small{color:#567369}.stats{display:flex;gap:24px;border-block:1px solid #c9d8cd;padding:18px 0;margin:22px 0}.stats strong{display:block;font-size:23px}.stop{border-left:2px solid #3b8063;padding:0 0 22px 17px;margin-left:8px}.stop h3{margin:0 0 6px;font-size:14px}.stop p{margin:2px 0}.warnings{font-size:12px;color:#67756b;margin-top:22px}.warnings li{margin-bottom:9px}#map{height:100%;background:#dfe9e0}.badge{font-weight:700;display:grid;place-items:center;width:28px;height:28px;border-radius:50%;background:#185a47;color:white;border:2px solid white;box-shadow:0 1px 6px #0004}@media(max-width:760px){.layout{grid-template-columns:1fr;height:auto}#map{height:60vh;grid-row:1}aside{padding:22px}}</style></head>
+<body><div class="layout"><aside><a href="/">← New route</a><p class="eyebrow">Fuelwise / Trip plan</p><h1>Your road.<br>Your fuel plan.</h1><div class="amount">${{ trip.total_fuel_cost }}</div><small>Fuel purchases along the route · USD</small><div class="stats"><div><strong>{{ trip.distance_miles|floatformat:0 }}</strong>miles</div><div><strong>{{ trip.purchases|length }}</strong>fuel stops</div><div><strong>{{ trip.gallons_purchased|floatformat:1 }}</strong>gal purchased</div></div>
+{% for stop in trip.purchases %}<section class="stop"><h3>{{ forloop.counter }} · {{ stop.name }}</h3><p>{{ stop.city }}, {{ stop.state }} · Mile {{ stop.mile|floatformat:1 }}</p><p>{{ stop.gallons|floatformat:2 }} gal × ${{ stop.price_per_gallon|floatformat:3 }} = <strong>${{ stop.cost }}</strong></p><small>Arrive with {{ stop.arrival_gallons|floatformat:2 }} gal · leave with {{ stop.departure_gallons|floatformat:2 }} gal</small></section>{% empty %}<p>No fuel purchase needed for this trip.</p>{% endfor %}
+<p>Arrive with {{ trip.arrival_gallons|floatformat:2 }} gallons.</p>
+<p>Cost-optimized among available verified stations.<br><small>{{ trip.coverage.verified_stations }} of {{ trip.coverage.total_us_stations }} US stations have verified coordinates. Unavailable stations may have lower prices.</small></p>
+{% if trip.fuel_accounting.total_consumed_fuel_cost %}<p>Total trip fuel cost · Value of all fuel consumed: <strong>${{ trip.fuel_accounting.total_consumed_fuel_cost }}</strong><br><small>Includes starting fuel consumed at your supplied price when used. Unused starting fuel is excluded.</small></p>{% else %}<p>Total trip fuel cost: <strong>Unknown</strong><br><small>Enter the starting fuel price to calculate the value of all fuel consumed. The purchase amount above is not the complete trip fuel cost.</small></p>{% endif %}
+<ul class="warnings">{% for warning in trip.warnings %}<li>{{ warning }}</li>{% endfor %}</ul><small>Routing by <a href="https://project-osrm.org/">OSRM</a> / <a href="https://routing.openstreetmap.de/about.html">FOSSGIS</a>. <a href="https://www.openstreetmap.org/fixthemap">Fix the map</a>. <a href="https://www.geoapify.com/">Powered by Geoapify</a> when geocoding is used. City lookup and boundaries: US Census Bureau.</small></aside><div id="map" role="region" aria-label="Route map"></div></div>
+{{ trip|json_script:"trip-data" }}
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+<script>
+const t=JSON.parse(document.getElementById('trip-data').textContent);
+if(typeof L==='undefined'){
+  document.getElementById('map').textContent='Map library unavailable. Your fuel plan is shown alongside; check your internet connection.';
+}else{
+  const map=L.map('map');
+  L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',{
+    maxZoom:19,attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap contributors</a>'
+  }).addTo(map);
+  const route=L.geoJSON(t.route,{style:{color:'#185a47',weight:5,opacity:.88}}).addTo(map);
+  const fitRoute=()=>map.fitBounds(route.getBounds(),{padding:[35,35]});
+  fitRoute();
+  map.on('resize',fitRoute);
+  function marker(point,label,text){
+    const node=document.createElement('div');node.textContent=text;
+    L.marker([point.lat,point.lon],{
+      icon:L.divIcon({className:'',html:'<div class="badge">'+label+'</div>',iconSize:[28,28],iconAnchor:[14,14]})
+    }).addTo(map).bindPopup(node);
+  }
+  marker(t.start,'A','Start');marker(t.finish,'B','Finish');
+  t.purchases.forEach((p,i)=>marker(p,String(i+1),p.name+' — '+p.gallons.toFixed(2)+' gal · $'+p.cost));
+  t.visits.filter(v=>!t.purchases.some(p=>p.station_id===v.station_id)).forEach(v=>{
+    const node=document.createElement('div');node.textContent=v.name+' — routed waypoint; no purchase needed';
+    L.circleMarker([v.lat,v.lon],{radius:5,color:'#718477'}).addTo(map).bindPopup(node);
+  });
+}
+</script></body></html>

@@ -1,0 +1,415 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Fuelwise Route API",
+    "version": "1.1.0",
+    "description": "US fuel-route planner with 1,396 operator-matched station coordinates and offline city/state lookup. Normal plans use 1–2 routing calls, with at most one third call for detour recovery. Default starting fuel: 50 already-owned gallons. Purchases and total consumed-fuel value are reported separately; unresolved station coverage is disclosed."
+  },
+  "servers": [
+    {
+      "url": "http://127.0.0.1:8000"
+    }
+  ],
+  "paths": {
+    "/api/routes/": {
+      "post": {
+        "summary": "Plan a fuel-efficient US road trip",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "start",
+                  "finish"
+                ],
+                "properties": {
+                  "start": {
+                    "oneOf": [
+                      {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "required": [
+                          "lat",
+                          "lon"
+                        ],
+                        "properties": {
+                          "lat": {
+                            "type": "number",
+                            "minimum": -90,
+                            "maximum": 90
+                          },
+                          "lon": {
+                            "type": "number",
+                            "minimum": -180,
+                            "maximum": 180
+                          }
+                        }
+                      },
+                      {
+                        "type": "string",
+                        "minLength": 2,
+                        "maxLength": 250
+                      }
+                    ]
+                  },
+                  "finish": {
+                    "oneOf": [
+                      {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "required": [
+                          "lat",
+                          "lon"
+                        ],
+                        "properties": {
+                          "lat": {
+                            "type": "number",
+                            "minimum": -90,
+                            "maximum": 90
+                          },
+                          "lon": {
+                            "type": "number",
+                            "minimum": -180,
+                            "maximum": 180
+                          }
+                        }
+                      },
+                      {
+                        "type": "string",
+                        "minLength": 2,
+                        "maxLength": 250
+                      }
+                    ]
+                  },
+                  "initial_fuel_gallons": {
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 50,
+                    "default": 50
+                  },
+                  "initial_fuel_price": {
+                    "type": [
+                      "number",
+                      "null"
+                    ],
+                    "minimum": 0,
+                    "maximum": 100
+                  }
+                }
+              },
+              "examples": {
+                "long_route": {
+                  "value": {
+                    "start": {
+                      "lat": 34.0522,
+                      "lon": -118.2437
+                    },
+                    "finish": {
+                      "lat": 35.4676,
+                      "lon": -97.5164
+                    }
+                  }
+                },
+                "short_route": {
+                  "value": {
+                    "start": {
+                      "lat": 32.7767,
+                      "lon": -96.797
+                    },
+                    "finish": {
+                      "lat": 30.2672,
+                      "lon": -97.7431
+                    }
+                  }
+                },
+                "invalid_country": {
+                  "value": {
+                    "start": {
+                      "lat": 43.65,
+                      "lon": -79.38
+                    },
+                    "finish": {
+                      "lat": 35.4676,
+                      "lon": -97.5164
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created route with purchases and map URL",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Trip"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Structured error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "JSON request body exceeds 16 KiB"
+          },
+          "415": {
+            "description": "Structured error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Structured error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "502": {
+            "description": "Structured error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Structured error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string"
+                        },
+                        "message": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/health/": {
+      "get": {
+        "summary": "Station coverage and health",
+        "responses": {
+          "200": {
+            "description": "Database available"
+          }
+        }
+      }
+    },
+    "/api/routes/{id}/": {
+      "get": {
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Saved trip",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Trip"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Unknown trip"
+          }
+        }
+      }
+    },
+    "/maps/{id}/": {
+      "get": {
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Interactive map HTML"
+          },
+          "404": {
+            "description": "Unknown trip"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Trip": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "map_url": {
+            "type": "string",
+            "format": "uri"
+          },
+          "distance_miles": {
+            "type": "number"
+          },
+          "total_fuel_cost": {
+            "type": "string",
+            "deprecated": true,
+            "description": "Compatibility alias for fuel_purchased_cost; NOT the value of all fuel consumed."
+          },
+          "fuel_purchased_cost": {"type": "string", "description": "USD spent on purchases during this trip; excludes already-owned starting fuel."},
+          "fuel_consumed_gallons": {"type": "number", "description": "Total fuel used over actual routed distance at 10 mpg."},
+          "total_trip_fuel_cost": {"type": ["string", "null"], "description": "USD value of consumed fuel, including starting fuel used at initial_fuel_price. Null when starting fuel is consumed but its price is unknown; never assumed free."},
+          "fuel_accounting": {
+            "type": "object",
+            "properties": {
+              "basis": {"type": "string"},
+              "en_route_cost": {"type": "string"},
+              "initial_gallons_consumed": {"type": "number"},
+              "initial_fuel_consumed_cost": {"type": ["string", "null"]},
+              "total_consumed_fuel_cost": {
+                "type": ["string", "null"],
+                "description": "Cost of fuel actually consumed, including starting fuel at the supplied initial_fuel_price; null if its value is unknown."
+              },
+              "initial_price_required": {"type": "boolean"}
+            }
+          },
+          "local_geocodes": {"type": "integer", "minimum": 0, "maximum": 2},
+          "detour_replanned": {"type": "boolean"},
+          "gallons_purchased": {
+            "type": "number"
+          },
+          "gallons_consumed": {
+            "type": "number"
+          },
+          "arrival_gallons": {
+            "type": "number"
+          },
+          "purchases": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            }
+          },
+          "route": {
+            "type": "object",
+            "description": "GeoJSON Feature with LineString geometry"
+          },
+          "external_calls": {
+            "type": "object"
+          },
+          "coverage": {
+            "type": "object"
+          },
+          "warnings": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Fuelwise · Route planner</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#f4f5f0;color:#173d36;font:16px/1.6 system-ui,sans-serif}main{max-width:820px;margin:7vh auto;padding:30px}.brand{font-size:14px;text-transform:uppercase;letter-spacing:3px}h1{font-size:clamp(38px,7vw,64px);line-height:1.08;letter-spacing:-3px;margin:28px 0}p{color:#527067}.card{background:white;border:1px solid #dce3db;border-radius:18px;padding:28px;margin-top:30px}label{display:block;font-weight:600;margin:16px 0 6px}input{display:block;width:100%;font:15px system-ui;padding:14px;border:1px solid #aebfb4;border-radius:8px}button{background:#185a47;color:white;border:0;padding:15px 22px;border-radius:8px;font-size:16px;margin-top:24px;cursor:pointer}button:disabled{opacity:.6}small{display:block;color:#6a7b71}.note{font-size:14px}#status{white-space:pre-wrap;color:#994625}a{color:inherit}
+</style></head><body><main><div class="brand">Fuelwise</div><h1>A better plan<br>for every gallon.</h1><p>Plan fuel stops with a 500-mile range and 10 miles per gallon. See the route, fuel quantities and purchase costs together.</p>
+<form id="form" class="card"><strong>Choose your US road trip</strong><small>Try the ready-to-run example, or enter a city and state such as Chicago, IL.</small>
+<label for="start">Start</label><input id="start" value='{"lat":34.0522,"lon":-118.2437}' required><label for="finish">Finish</label><input id="finish" value='{"lat":35.4676,"lon":-97.5164}' required><small>Use city and state, or a JSON object with lat and lon. Specific street addresses require configured geocoding.</small><label for="fuel">Fuel already in tank (gallons)</label><input id="fuel" type="number" min="0" max="50" step="0.1" value="50"><label for="initial-price">Price paid for starting fuel (USD/gallon, optional)</label><input id="initial-price" type="number" min="0" max="100" step="0.001" placeholder="Include to calculate the value of all fuel consumed"><button id="submit">Plan my route →</button><p id="status" role="status" aria-live="polite"></p></form>
+</main>
+<script>
+const form=document.getElementById('form'),status=document.getElementById('status'),button=document.getElementById('submit');
+function parse(s){try{return JSON.parse(s)}catch{return s}}
+form.addEventListener('submit',async e=>{
+  e.preventDefault();button.disabled=true;status.textContent='Calculating the route and checking fuel stops…';
+  const payload={start:parse(document.getElementById('start').value),finish:parse(document.getElementById('finish').value),initial_fuel_gallons:Number(document.getElementById('fuel').value)};
+  const price=document.getElementById('initial-price').value;
+  if(price!=='')payload.initial_fuel_price=Number(price);
+  try{
+    const r=await fetch('/api/routes/',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
+    const data=await r.json();
+    if(!r.ok)throw new Error(data.error?.message||'Unable to plan this route.');
+    window.location.assign(data.map_url);
+  }catch(err){status.textContent=err.message;button.disabled=false}
+});
+</script></body></html>

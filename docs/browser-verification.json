@@ -1,0 +1,13 @@
+{
+  "browser": "Google Chrome, headless via Playwright",
+  "desktop_viewport": {"width": 1440, "height": 1000},
+  "mobile_viewport": {"width": 390, "height": 844},
+  "route_paths": 1,
+  "markers": 7,
+  "map_tiles_loaded": true,
+  "mobile_markers_within_map_after_resize": true,
+  "mobile_horizontal_overflow": false,
+  "javascript_errors": [],
+  "invalid_country_message": "Both locations must be within the USA.",
+  "script": "scripts/verify_browser.cjs"
+}

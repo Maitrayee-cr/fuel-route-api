@@ -1,0 +1,14 @@
+{
+  "station_sources": [
+    "https://locations.pilotflyingj.com/search",
+    "https://www.loves.com/api/fetch_stores",
+    "https://www.ta-petro.com/api/locationsdata/download/"
+  ],
+  "matching": "See each coordinate record's match field; ambiguous matches excluded.",
+  "station_coordinates": 1396,
+  "places": 32058,
+  "boundary_source": "https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/State_County/MapServer/0",
+  "place_source": "https://www2.census.gov/geo/docs/maps-data/data/gazetteer/2025_Gazetteer/2025_Gaz_place_national.zip",
+  "price_sha256": "c704371f141ded9c54df6c32d488a0ba2ceb589f88c936c967daa5330e0cd241",
+  "notes": "Coordinates only are enriched. All prices remain from the assessment CSV. Gazetteer points are used only for requested city endpoints, never for station locations."
+}

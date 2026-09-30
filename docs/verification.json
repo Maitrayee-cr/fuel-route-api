@@ -1,0 +1,506 @@
+{
+  "checked_at": "2026-09-29T19:26:20.179866+00:00",
+  "django": "6.1.1",
+  "stations": 6626,
+  "verified_stations": 1396,
+  "all_live_checks_passed": true,
+  "results": [
+    {
+      "case": "Los Angeles to Oklahoma City",
+      "phase": "first",
+      "status": 201,
+      "seconds": 2.5461,
+      "distance_miles": 1330.7990709257933,
+      "total_fuel_cost": "262.03",
+      "external_calls": {
+        "routing": 2,
+        "geocoding": 0,
+        "cache_hits": 0
+      },
+      "local_geocodes": 0,
+      "detour_replanned": false,
+      "coverage": {
+        "total_us_stations": 6626,
+        "verified_stations": 1396,
+        "corridor_candidates": 50,
+        "corridor_miles": 2.0
+      },
+      "stops": 5,
+      "checks": {
+        "explicit_cost_fields": true,
+        "cash_reconciles": true,
+        "fuel_reconciles": true,
+        "range_respected": true,
+        "routing_budget": true,
+        "map_served": true,
+        "detail_served": true
+      }
+    },
+    {
+      "case": "Los Angeles to Oklahoma City",
+      "phase": "repeat",
+      "status": 201,
+      "seconds": 0.0518,
+      "distance_miles": 1330.7990709257933,
+      "total_fuel_cost": "262.03",
+      "external_calls": {
+        "routing": 0,
+        "geocoding": 0,
+        "cache_hits": 2
+      },
+      "local_geocodes": 0,
+      "detour_replanned": false,
+      "coverage": {
+        "total_us_stations": 6626,
+        "verified_stations": 1396,
+        "corridor_candidates": 50,
+        "corridor_miles": 2.0
+      },
+      "stops": 5,
+      "checks": {
+        "explicit_cost_fields": true,
+        "cash_reconciles": true,
+        "fuel_reconciles": true,
+        "range_respected": true,
+        "routing_budget": true,
+        "map_served": true,
+        "detail_served": true
+      }
+    },
+    {
+      "case": "Chicago to Atlanta",
+      "phase": "first",
+      "status": 201,
+      "seconds": 2.3189,
+      "distance_miles": 687.6775878867414,
+      "total_fuel_cost": "57.32",
+      "external_calls": {
+        "routing": 2,
+        "geocoding": 0,
+        "cache_hits": 0
+      },
+      "local_geocodes": 0,
+      "detour_replanned": false,
+      "coverage": {
+        "total_us_stations": 6626,
+        "verified_stations": 1396,
+        "corridor_candidates": 33,
+        "corridor_miles": 2.0
+      },
+      "stops": 2,
+      "checks": {
+        "explicit_cost_fields": true,
+        "cash_reconciles": true,
+        "fuel_reconciles": true,
+        "range_respected": true,
+        "routing_budget": true,
+        "map_served": true,
+        "detail_served": true
+      }
+    },
+    {
+      "case": "Chicago to Atlanta",
+      "phase": "repeat",
+      "status": 201,
+      "seconds": 0.0632,
+      "distance_miles": 687.6775878867414,
+      "total_fuel_cost": "57.32",
+      "external_calls": {
+        "routing": 0,
+        "geocoding": 0,
+        "cache_hits": 2
+      },
+      "local_geocodes": 0,
+      "detour_replanned": false,
+      "coverage": {
+        "total_us_stations": 6626,
+        "verified_stations": 1396,
+        "corridor_candidates": 33,
+        "corridor_miles": 2.0
+      },
+      "stops": 2,
+      "checks": {
+        "explicit_cost_fields": true,
+        "cash_reconciles": true,
+        "fuel_reconciles": true,
+        "range_respected": true,
+        "routing_budget": true,
+        "map_served": true,
+        "detail_served": true
+      }
+    },
+    {
+      "case": "New York to Miami",
+      "phase": "first",
+      "status": 201,
+      "seconds": 2.3398,
+      "distance_miles": 1287.5096312534795,
+      "total_fuel_cost": "257.00",
+      "external_calls": {
+        "routing": 2,
+        "geocoding": 0,
+        "cache_hits": 0
+      },
+      "local_geocodes": 0,
+      "detour_replanned": false,
+      "coverage": {
+        "total_us_stations": 6626,
+        "verified_stations": 1396,
+        "corridor_candidates": 55,
+        "corridor_miles": 2.0
+      },
+      "stops": 4,
+      "checks": {
+        "explicit_cost_fields": true,
+        "cash_reconciles": true,
+        "fuel_reconciles": true,
+        "range_respected": true,
+        "routing_budget": true,
+        "map_served": true,
+        "detail_served": true
+      }
+    },
+    {
+      "case": "New York to Miami",
+      "phase": "repeat",
+      "status": 201,
+      "seconds": 0.087,
+      "distance_miles": 1287.5096312534795,
+      "total_fuel_cost": "257.00",
+      "external_calls": {
+        "routing": 0,
+        "geocoding": 0,
+        "cache_hits": 2
+      },
+      "local_geocodes": 0,
+      "detour_replanned": false,
+      "coverage": {
+        "total_us_stations": 6626,
+        "verified_stations": 1396,
+        "corridor_candidates": 55,
+        "corridor_miles": 2.0
+      },
+      "stops": 4,
+      "checks": {
+        "explicit_cost_fields": true,
+        "cash_reconciles": true,
+        "fuel_reconciles": true,
+        "range_respected": true,
+        "routing_budget": true,
+        "map_served": true,
+        "detail_served": true
+      }
+    },
+    {
+      "case": "Seattle to Denver",
+      "phase": "first",
+      "status": 201,
+      "seconds": 2.4058,
+      "distance_miles": 1305.9991524496936,
+      "total_fuel_cost": "271.96",
+      "external_calls": {
+        "routing": 2,
+        "geocoding": 0,
+        "cache_hits": 0
+      },
+      "local_geocodes": 0,
+      "detour_replanned": false,
+      "coverage": {
+        "total_us_stations": 6626,
+        "verified_stations": 1396,
+        "corridor_candidates": 34,
+        "corridor_miles": 2.0
+      },
+      "stops": 3,
+      "checks": {
+        "explicit_cost_fields": true,
+        "cash_reconciles": true,
+        "fuel_reconciles": true,
+        "range_respected": true,
+        "routing_budget": true,
+        "map_served": true,
+        "detail_served": true
+      }
+    },
+    {
+      "case": "Seattle to Denver",
+      "phase": "repeat",
+      "status": 201,
+      "seconds": 0.0692,
+      "distance_miles": 1305.9991524496936,
+      "total_fuel_cost": "271.96",
+      "external_calls": {
+        "routing": 0,
+        "geocoding": 0,
+        "cache_hits": 2
+      },
+      "local_geocodes": 0,
+      "detour_replanned": false,
+      "coverage": {
+        "total_us_stations": 6626,
+        "verified_stations": 1396,
+        "corridor_candidates": 34,
+        "corridor_miles": 2.0
+      },
+      "stops": 3,
+      "checks": {
+        "explicit_cost_fields": true,
+        "cash_reconciles": true,
+        "fuel_reconciles": true,
+        "range_respected": true,
+        "routing_budget": true,
+        "map_served": true,
+        "detail_served": true
+      }
+    },
+    {
+      "case": "Dallas to Austin (local city names)",
+      "phase": "first",
+      "status": 201,
+      "seconds": 1.0356,
+      "distance_miles": 195.9710291895331,
+      "total_fuel_cost": "0.00",
+      "external_calls": {
+        "routing": 1,
+        "geocoding": 0,
+        "cache_hits": 0
+      },
+      "local_geocodes": 2,
+      "detour_replanned": false,
+      "coverage": {
+        "total_us_stations": 6626,
+        "verified_stations": 1396,
+        "corridor_candidates": 6,
+        "corridor_miles": 2.0
+      },
+      "stops": 0,
+      "checks": {
+        "explicit_cost_fields": true,
+        "cash_reconciles": true,
+        "fuel_reconciles": true,
+        "range_respected": true,
+        "routing_budget": true,
+        "map_served": true,
+        "detail_served": true
+      }
+    },
+    {
+      "case": "Dallas to Austin (local city names)",
+      "phase": "repeat",
+      "status": 201,
+      "seconds": 0.0142,
+      "distance_miles": 195.9710291895331,
+      "total_fuel_cost": "0.00",
+      "external_calls": {
+        "routing": 0,
+        "geocoding": 0,
+        "cache_hits": 1
+      },
+      "local_geocodes": 2,
+      "detour_replanned": false,
+      "coverage": {
+        "total_us_stations": 6626,
+        "verified_stations": 1396,
+        "corridor_candidates": 6,
+        "corridor_miles": 2.0
+      },
+      "stops": 0,
+      "checks": {
+        "explicit_cost_fields": true,
+        "cash_reconciles": true,
+        "fuel_reconciles": true,
+        "range_respected": true,
+        "routing_budget": true,
+        "map_served": true,
+        "detail_served": true
+      }
+    },
+    {
+      "case": "Boston to Nashville",
+      "phase": "first",
+      "status": 201,
+      "seconds": 2.9046,
+      "distance_miles": 1100.1486941263024,
+      "total_fuel_cost": "191.30",
+      "external_calls": {
+        "routing": 2,
+        "geocoding": 0,
+        "cache_hits": 0
+      },
+      "local_geocodes": 0,
+      "detour_replanned": false,
+      "coverage": {
+        "total_us_stations": 6626,
+        "verified_stations": 1396,
+        "corridor_candidates": 55,
+        "corridor_miles": 2.0
+      },
+      "stops": 2,
+      "checks": {
+        "explicit_cost_fields": true,
+        "cash_reconciles": true,
+        "fuel_reconciles": true,
+        "range_respected": true,
+        "routing_budget": true,
+        "map_served": true,
+        "detail_served": true
+      }
+    },
+    {
+      "case": "Boston to Nashville",
+      "phase": "repeat",
+      "status": 201,
+      "seconds": 0.1648,
+      "distance_miles": 1100.1486941263024,
+      "total_fuel_cost": "191.30",
+      "external_calls": {
+        "routing": 0,
+        "geocoding": 0,
+        "cache_hits": 2
+      },
+      "local_geocodes": 0,
+      "detour_replanned": false,
+      "coverage": {
+        "total_us_stations": 6626,
+        "verified_stations": 1396,
+        "corridor_candidates": 55,
+        "corridor_miles": 2.0
+      },
+      "stops": 2,
+      "checks": {
+        "explicit_cost_fields": true,
+        "cash_reconciles": true,
+        "fuel_reconciles": true,
+        "range_respected": true,
+        "routing_budget": true,
+        "map_served": true,
+        "detail_served": true
+      }
+    },
+    {
+      "case": "New York to Los Angeles",
+      "phase": "first",
+      "status": 201,
+      "seconds": 3.1417,
+      "distance_miles": 2804.671717171717,
+      "total_fuel_cost": "743.65",
+      "external_calls": {
+        "routing": 2,
+        "geocoding": 0,
+        "cache_hits": 0
+      },
+      "local_geocodes": 0,
+      "detour_replanned": false,
+      "coverage": {
+        "total_us_stations": 6626,
+        "verified_stations": 1396,
+        "corridor_candidates": 98,
+        "corridor_miles": 2.0
+      },
+      "stops": 9,
+      "checks": {
+        "explicit_cost_fields": true,
+        "cash_reconciles": true,
+        "fuel_reconciles": true,
+        "range_respected": true,
+        "routing_budget": true,
+        "map_served": true,
+        "detail_served": true
+      }
+    },
+    {
+      "case": "New York to Los Angeles",
+      "phase": "repeat",
+      "status": 201,
+      "seconds": 0.4607,
+      "distance_miles": 2804.671717171717,
+      "total_fuel_cost": "743.65",
+      "external_calls": {
+        "routing": 0,
+        "geocoding": 0,
+        "cache_hits": 2
+      },
+      "local_geocodes": 0,
+      "detour_replanned": false,
+      "coverage": {
+        "total_us_stations": 6626,
+        "verified_stations": 1396,
+        "corridor_candidates": 98,
+        "corridor_miles": 2.0
+      },
+      "stops": 9,
+      "checks": {
+        "explicit_cost_fields": true,
+        "cash_reconciles": true,
+        "fuel_reconciles": true,
+        "range_respected": true,
+        "routing_budget": true,
+        "map_served": true,
+        "detail_served": true
+      }
+    },
+    {
+      "case": "Chicago to Atlanta (local city names)",
+      "phase": "first",
+      "status": 201,
+      "seconds": 5.5934,
+      "distance_miles": 686.1086256263421,
+      "total_fuel_cost": "56.84",
+      "external_calls": {
+        "routing": 2,
+        "geocoding": 0,
+        "cache_hits": 0
+      },
+      "local_geocodes": 2,
+      "detour_replanned": false,
+      "coverage": {
+        "total_us_stations": 6626,
+        "verified_stations": 1396,
+        "corridor_candidates": 33,
+        "corridor_miles": 2.0
+      },
+      "stops": 2,
+      "checks": {
+        "explicit_cost_fields": true,
+        "cash_reconciles": true,
+        "fuel_reconciles": true,
+        "range_respected": true,
+        "routing_budget": true,
+        "map_served": true,
+        "detail_served": true
+      }
+    },
+    {
+      "case": "Chicago to Atlanta (local city names)",
+      "phase": "repeat",
+      "status": 201,
+      "seconds": 0.0641,
+      "distance_miles": 686.1086256263421,
+      "total_fuel_cost": "56.84",
+      "external_calls": {
+        "routing": 0,
+        "geocoding": 0,
+        "cache_hits": 2
+      },
+      "local_geocodes": 2,
+      "detour_replanned": false,
+      "coverage": {
+        "total_us_stations": 6626,
+        "verified_stations": 1396,
+        "corridor_candidates": 33,
+        "corridor_miles": 2.0
+      },
+      "stops": 2,
+      "checks": {
+        "explicit_cost_fields": true,
+        "cash_reconciles": true,
+        "fuel_reconciles": true,
+        "range_respected": true,
+        "routing_budget": true,
+        "map_served": true,
+        "detail_served": true
+      }
+    }
+  ],
+  "notes": "First requests may already have cached geometry; external_calls states the actual network count. Timings are individual observations."
+}
